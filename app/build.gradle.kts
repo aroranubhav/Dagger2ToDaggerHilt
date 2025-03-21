@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.almax.dagger2todaggerhilt"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.almax.dagger2todaggerhilt"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -60,4 +60,8 @@ dependencies {
 
     //glide
     implementation(libs.glide)
+
+    //dagger
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 }
