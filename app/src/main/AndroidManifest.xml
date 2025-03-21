@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Dagger2ToDaggerHilt"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.gif.GifActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
