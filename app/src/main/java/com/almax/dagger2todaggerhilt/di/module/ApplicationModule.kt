@@ -1,26 +1,19 @@
 package com.almax.dagger2todaggerhilt.di.module
 
-import android.app.Application
-import android.content.Context
 import com.almax.dagger2todaggerhilt.data.remote.NetworkService
-import com.almax.dagger2todaggerhilt.di.ApplicationContext
 import com.almax.dagger2todaggerhilt.di.BaseUrl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(
-    private val application: Application
-) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context =
-        application
+@InstallIn(SingletonComponent::class)
+class ApplicationModule {
 
     @BaseUrl
     @Provides

@@ -1,36 +1,17 @@
 package com.almax.dagger2todaggerhilt.di.module
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.almax.dagger2todaggerhilt.data.repository.TrendingGifRepository
-import com.almax.dagger2todaggerhilt.di.ApplicationContext
-import com.almax.dagger2todaggerhilt.presentation.base.ViewModelProviderFactory
 import com.almax.dagger2todaggerhilt.presentation.gif.GifAdapter
-import com.almax.dagger2todaggerhilt.presentation.gif.GifViewModel
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
-class GifModule(
-    private val activity: AppCompatActivity
-) {
+@InstallIn(ActivityComponent::class)
+class GifModule {
 
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context =
-        activity
-
-    @Provides
-    fun provideGifViewModel(
-        repository: TrendingGifRepository
-    ): GifViewModel =
-        ViewModelProvider(
-            activity,
-            ViewModelProviderFactory(GifViewModel::class) {
-                GifViewModel(repository)
-            })[GifViewModel::class]
-
+    @ActivityScoped
     @Provides
     fun provideGifAdapter(): GifAdapter =
         GifAdapter(arrayListOf())
