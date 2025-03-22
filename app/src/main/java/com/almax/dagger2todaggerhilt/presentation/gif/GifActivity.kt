@@ -4,39 +4,38 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.almax.dagger2todaggerhilt.GifApplication
-import com.almax.dagger2todaggerhilt.R
 import com.almax.dagger2todaggerhilt.databinding.ActivityGifBinding
-import com.almax.dagger2todaggerhilt.di.component.DaggerGifComponent
-import com.almax.dagger2todaggerhilt.di.component.GifComponent
-import com.almax.dagger2todaggerhilt.di.module.GifModule
 import com.almax.dagger2todaggerhilt.presentation.base.UiState
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GifActivity : AppCompatActivity() {
-
-    private lateinit var component: GifComponent
 
     private lateinit var binding: ActivityGifBinding
 
-    @Inject
-    lateinit var viewModel: GifViewModel
+    private lateinit var viewModel: GifViewModel
 
     @Inject
     lateinit var adapter: GifAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityGifBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         setupUi()
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this@GifActivity)[GifViewModel::class]
     }
 
     private fun setupUi() {
@@ -88,12 +87,4 @@ class GifActivity : AppCompatActivity() {
         binding.pbGif.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    private fun injectDependencies() {
-        component = DaggerGifComponent
-            .builder()
-            .applicationComponent((application as GifApplication).component)
-            .gifModule(GifModule(this@GifActivity))
-            .build()
-        component.inject(this@GifActivity)
-    }
 }
